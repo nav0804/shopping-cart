@@ -3,7 +3,6 @@ package com.nav.shoppingcart.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Blob;
@@ -12,7 +11,6 @@ import java.sql.Blob;
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
 public class Image {
     @Id

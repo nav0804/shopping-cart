@@ -1,4 +1,4 @@
-package com.nav.shoppingcart.services;
+package com.nav.shoppingcart.services.impl;
 
 import com.nav.shoppingcart.entities.Category;
 import com.nav.shoppingcart.entities.Product;
@@ -6,7 +6,8 @@ import com.nav.shoppingcart.exceptions.ProductNotFoundException;
 import com.nav.shoppingcart.repository.CategoryRepository;
 import com.nav.shoppingcart.repository.ProductRepository;
 import com.nav.shoppingcart.request.AddProductRequest;
-import com.nav.shoppingcart.services.impl.ProductServiceImpl;
+import com.nav.shoppingcart.request.UpdateProductRequest;
+import com.nav.shoppingcart.services.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ProductService implements ProductServiceImpl {
+public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
@@ -57,8 +58,23 @@ public class ProductService implements ProductServiceImpl {
     }
 
     @Override
-    public void updateProduct(Product product, Long id) {
+    public Product updateProduct(UpdateProductRequest request, Long id) {
+        return productRepository.findById(id)
+                .map(existingProduct -> updateExistingProduct(existingProduct,request))
+                .map(productRepository::save)
+                .orElseThrow(()-> new ProductNotFoundException("Product not found"));
+    }
 
+    private Product updateExistingProduct(Product existingProduct, UpdateProductRequest request){
+        existingProduct.setBrand(request.getBrand());
+        existingProduct.setName(request.getName());
+        existingProduct.setDescription(request.getDescription());
+        existingProduct.setInventory(request.getInventory());
+        existingProduct.setPrice(request.getPrice());
+
+        Category existingCategory = new Category(request.getCategory().getName());
+        existingProduct.setCategory(existingCategory);
+        return existingProduct;
     }
 
     @Override

@@ -1,15 +1,16 @@
-package com.nav.shoppingcart.services.impl;
+package com.nav.shoppingcart.services;
 
 import com.nav.shoppingcart.entities.Product;
 import com.nav.shoppingcart.request.AddProductRequest;
+import com.nav.shoppingcart.request.UpdateProductRequest;
 
 import java.util.List;
 
-public interface ProductServiceImpl {
+public interface IProductService {
     Product addProduct(AddProductRequest product);
     Product getProductById(Long id);
     void deleteProduct(Long id);
-    void updateProduct(Product product, Long id);
+    Product updateProduct(UpdateProductRequest request, Long id);
 
     List<Product> allProducts();
     List<Product> productByCategory(String category);
