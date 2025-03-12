@@ -1,10 +1,9 @@
 package com.nav.shoppingcart.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 
 public class ApiResponse {
     private String message;
